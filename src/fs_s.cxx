@@ -24,15 +24,23 @@
 
 #include <iostream>
 #include <ostream>
-#define UL unsigned long
+#include "../inc/toolbox.hxx"
+
 
 int main(int argc, char **argv)
 {
-	UL n,m,z,c,r;
-
-	UL S[5] = { 24, 39, 104, 299, 624 };
-{
+	ul n,m,z,c,r;
+	ul S[5] = { 24, 39, 104, 299, 624 };
+	std::vector<ul> primes;
+	std::vector<ul> factors;
 	
+	SieveOfEratosthenes(primes,10000U);
+	find_factors(primes,125,factors);
+	for(auto i = factors.begin(); i != factors.end(); ++i)
+	{
+		printf("%lu ",*i);
+	}
+	printf("\n");
 	return 0;
 }
 

@@ -1,5 +1,8 @@
 #Makefile
 
+fss: fs_s.cxx Makefile 
+	clang++ fs_s.cxx toolbox.cxx --std=c++17 -o fss
+
 svalues: s_values.cxx Makefile
 	clang++ s_values.cxx --std=c++17 -o sv
 	
