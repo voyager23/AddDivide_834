@@ -32,15 +32,21 @@ int main(int argc, char **argv)
 	ul n,m,z,c,r;
 	ul S[5] = { 24, 39, 104, 299, 624 };
 	std::vector<ul> primes;
-	std::vector<ul> factors;
+	std::vector<ul> fact;	// return value from find_factors
+	std::map<ul, std::vector<ul>> d_facts;	//dictionary of factors
 	
 	SieveOfEratosthenes(primes,10000U);
-	find_factors(primes,125,factors);
-	for(auto i = factors.begin(); i != factors.end(); ++i)
-	{
-		printf("%lu ",*i);
+	
+	// Constuct the dictionary up to 1000000UL
+	for(n = 3; n != 1000000; ++n) {
+		find_factors(primes,n,fact);
+		auto r = d_facts.insert(std::pair<ul,std::vector<ul>>(n,fact));
+		if(r.second == false) {
+			printf("Insert failed.\n");
+			exit(1);
+		}
 	}
-	printf("\n");
+		
 	return 0;
 }
 
