@@ -40,22 +40,23 @@ void determ_v1() {
 	}
 }
 
-void determ_v2() {
+void determ_v2(const ul n = 10) {
 	ul b_sq, ac4, q, m;
 	double_t  dd, determ;
-	const ul n = 12;	// set sequence base
-	for(q = 1; q != 135; ++q) {
+	printf("N = %lu\n",n);
+	for(q = 1; q != 500; ++q) {
 		b_sq = (2*n - 2*q + 1) * (2*n - 2*q + 1);
-		ac4 = 8*n*(1-2*q);
+		ac4 = 8*n*(1-q);
 		determ = std::sqrt(b_sq - ac4);
 		if(determ == std::floor(determ))
-			printf("V2 q:%lu dd: %lu dterm:%f\n", q, (b_sq - ac4), determ);
+			// From determinant calculate 2 values of m
+			// printf("V2 q:%lu determ:%lu\n", q, (ul)determ);
 	}
 }
 
 int main(int argc, char **argv)
 {
-	determ_v2();
+	determ_v2(36UL);
 	return 0;
 }
 
