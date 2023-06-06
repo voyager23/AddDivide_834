@@ -1,7 +1,10 @@
 #Makefile
 
+qs : Makefile quadsoln.cxx
+	clang++ quadsoln.cxx toolbox.cxx --std=c++17 -o qs
+	
 fss: fs_s.cxx Makefile 
-	clang++ fs_s.cxx toolbox.cxx --std=c++17 -o fss
+	clang++ fs_s.cxx toolbox.cxx --std=c++17 -g -o fss
 
 svalues: s_values.cxx Makefile
 	clang++ s_values.cxx --std=c++17 -o sv

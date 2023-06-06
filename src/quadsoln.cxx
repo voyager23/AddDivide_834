@@ -1,5 +1,5 @@
 /*
- * fs_s.cxx
+ * quadsoln.cxx
  * 
  * Copyright 2023 mike <mike@pop-os>
  * 
@@ -24,31 +24,38 @@
 
 #include <iostream>
 #include <ostream>
+#include <cmath>
+
 #include "../inc/toolbox.hxx"
 
+void determ_v1() {
+	ul b_sq, ac4, q, m;
+	double_t  dd, determ;
+	for(q = 1; q != 135; ++q) {
+		b_sq = (25 - q) * (25 - q);
+		ac4  = 4 * (24 - 12*q);
+		determ = std::sqrt(b_sq - ac4);
+		if(determ == std::floor(determ))
+			printf("dd: %lu q:%lu dterm:%f\n",(b_sq - ac4), q, determ);
+	}
+}
+
+void determ_v2() {
+	ul b_sq, ac4, q, m;
+	double_t  dd, determ;
+	const ul n = 12;	// set sequence base
+	for(q = 1; q != 135; ++q) {
+		b_sq = (2*n - 2*q + 1) * (2*n - 2*q + 1);
+		ac4 = 8*n*(1-2*q);
+		determ = std::sqrt(b_sq - ac4);
+		if(determ == std::floor(determ))
+			printf("V2 q:%lu dd: %lu dterm:%f\n", q, (b_sq - ac4), determ);
+	}
+}
 
 int main(int argc, char **argv)
 {
-	ul n,m,z,c,r;
-	ul S[5] = { 24, 39, 104, 299, 624 };
-	std::vector<ul> primes;
-	std::vector<ul> fact;	// return value from find_factors
-	std::map<ul, std::vector<ul>> d_facts;	//dictionary of factors
-	
-	SieveOfEratosthenes(primes,10000U);
-	
-	// Constuct the dictionary up to 1000000UL
-	for(n = 3; n != 100; ++n) {
-		find_factors(primes,n,fact);
-		auto r = d_facts.insert(std::pair<ul,std::vector<ul>>(n,fact));
-		if(r.second == false) {
-			printf("Insert failed.\n");
-			exit(1);
-		}
-	}
-	for(auto i = d_facts.begin(); i != d_facts.end(); ++i) {
-		continue;
-	}
+	determ_v2();
 	return 0;
 }
 
