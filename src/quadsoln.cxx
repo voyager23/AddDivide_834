@@ -41,10 +41,11 @@ void determ_v1() {
 }
 
 void determ_v2(const int64_t n, std::vector<ul> &primes, std::vector<ul> &factors) {
-	int64_t b_sq, ac4, q, m1,m2;
+	int64_t b_sq, ac4, q, m1,m2,m1_max = n*n -2*n;
 	double_t  dd, determ;
-	printf("N = %ld\n",n);
-	for(q = 1; q != 1200000; ++q) {
+	printf("====================\nN = %ld\n",n);
+	q = 1;
+	while(true) {
 		b_sq = (2*n - 2*q + 1) * (2*n - 2*q + 1);
 		ac4 = 8*n*(1-q);
 		determ = std::sqrt(b_sq - ac4);
@@ -57,12 +58,14 @@ void determ_v2(const int64_t n, std::vector<ul> &primes, std::vector<ul> &factor
 			// find and print the factors of m
 			factors.clear();
 			find_factors(primes, m1, factors);
-			printf("m1=> ");
+			printf("m1 => ");
 			for(auto i = factors.begin(); i != factors.end(); ++i) printf("%lu ",*i);
 			printf("\n\n");
+			if(m1 == m1_max) break;
 		}//~if
-	}
-}
+		q += 1;
+	}//~while
+}//~determ_v2
 
 int main(int argc, char **argv)
 {
@@ -70,7 +73,8 @@ int main(int argc, char **argv)
 	std::vector<ul> factors;
 	SieveOfEratosthenes(primes,100000UL);
 	
-	determ_v2(386, primes, factors);
+	for(ul n = 380; n != 400; ++n)
+		determ_v2(n, primes, factors);
 	return 0;
 }
 
