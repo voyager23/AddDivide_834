@@ -73,7 +73,7 @@ int main(int argc, char **argv)
 	std::vector<ul> factors;
 	SieveOfEratosthenes(primes,100000UL);
 	
-	for(ul n = 380; n != 400; ++n)
+	for(ul n = 10; n != 11; ++n)
 		determ_v2(n, primes, factors);
 	return 0;
 }

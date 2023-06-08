@@ -204,6 +204,45 @@ ul fsf_v2(PrimePower pp, std::map<PrimePower, ul> &cache){
 	return 0;
 }
 
+std::vector<float_t> solve_quadratic(float a, float b, float c) {
+
+    float x1, x2, discriminant, realPart, imaginaryPart;
+    std::vector<float> roots;	// results
+    //cout << "Enter coefficients a, b and c: ";
+    //cin >> a >> b >> c;
+    discriminant = b*b - 4*a*c;
+    
+    if (discriminant > 0) {
+        x1 = (-b + std::sqrt(discriminant)) / (2*a);
+        x2 = (-b - std::sqrt(discriminant)) / (2*a);
+        //cout << "Roots are real and different." << endl;
+        //cout << "x1 = " << x1 << endl;
+        //cout << "x2 = " << x2 << endl;
+        roots.push_back(x1);
+        roots.push_back(x2);
+    }
+    
+    else if (discriminant == 0) {
+        //cout << "Roots are real and same." << endl;
+        x1 = -b/(2*a);
+        //cout << "x1 = x2 =" << x1 << endl;
+        roots.push_back(x1);
+    }
+
+    else {
+        realPart = -b/(2*a);
+        imaginaryPart = std::sqrt(-discriminant)/(2*a);
+        //cout << "Roots are complex and different."  << endl;
+        //cout << "x1 = " << realPart << "+" << imaginaryPart << "i" << endl;
+        //cout << "x2 = " << realPart << "-" << imaginaryPart << "i" << endl;
+        roots.push_back(realPart);
+        roots.push_back(imaginaryPart);
+        roots.push_back(realPart);
+        roots.push_back(-imaginaryPart);
+    }
+
+    return roots;
+}
 
 //-------------------Test code------------------
 #if(0)
