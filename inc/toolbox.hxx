@@ -30,6 +30,7 @@
 #include <utility>
 #include <map>
 #include <stdint.h>
+#include <set>
 
 	#define NL std::cout<<std::endl
 	
@@ -63,6 +64,6 @@
 	ul fsf_v2(PrimePower pp, std::map<PrimePower, ul> &cache);
 	void prt_map(MapFactN mfn);
 	
-	std::vector<float_t> solve_quadratic(float a, float b, float c);
+	std::vector<double_t> solve_quadratic(double_t a, double_t b, double_t c);
 	
 #endif

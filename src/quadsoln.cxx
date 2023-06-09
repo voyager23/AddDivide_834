@@ -67,14 +67,42 @@ void determ_v2(const int64_t n, std::vector<ul> &primes, std::vector<ul> &factor
 	}//~while
 }//~determ_v2
 
+void quad_solve(uint64_t n, std::set<uint64_t>* squares, std::vector<int64_t>* m_values ) {
+	uint64_t m_max = 2 * (n - 2);
+	m_values->clear();
+	// The term associated with m_max is(m+1)(m+2*n)
+	uint64_t m_max_term = (m_max + 1) + (m_max + 2*n);
+	uint64_t q_max = m_max_term / (n + m_max);
+	// now consider the determinant of the quadratic eqn. for m
+	// 4q^2 - q(8n + 4) + (2n - 1)^2 = Z^2
+	// here a = 4, b = (8n + 4), c = (2n - 1)^2
+	for(uint64_t q = 1; q <= q_max; ++q) {
+		if(squares->contains( 4*q*q - q*(8*n + 4) + (2*n + 1)*(2*n + 1) ) == true) {
+			// now have the value for q
+			// subs in m^2 + m(2n - 2q + 1) + 2n(1 - q)
+			// where: a = 1, b = (2n - 2q + 1) and c = 2n(1 - q)
+			std::vector<double_t> roots = solve_quadratic(double_t(1), double_t(2*n - 2*q + 1), double_t(2*n * (1 - q)));
+			// print roots
+		} //~if
+	} //~for
+}
+
 int main(int argc, char **argv)
 {
 	std::vector<ul> primes;
 	std::vector<ul> factors;
 	SieveOfEratosthenes(primes,100000UL);
 	
-	for(ul n = 10; n != 11; ++n)
-		determ_v2(n, primes, factors);
-	return 0;
+	std::set<uint64_t> squares;
+	for(uint64_t s = 1; s != 10000; ++s) squares.insert(s*s);
+	std::vector<int64_t> m_values;
+	
+	quad_solve(10, &squares, &m_values);
+	
+	
+	
+	//~ for(ul n = 10; n != 11; ++n)
+		//~ determ_v2(n, primes, factors);
+	//~ return 0;
 }
 

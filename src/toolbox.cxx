@@ -204,10 +204,10 @@ ul fsf_v2(PrimePower pp, std::map<PrimePower, ul> &cache){
 	return 0;
 }
 
-std::vector<float_t> solve_quadratic(float a, float b, float c) {
+std::vector<double_t> solve_quadratic(double_t a, double_t b, double_t c) {
 
-    float x1, x2, discriminant, realPart, imaginaryPart;
-    std::vector<float> roots;	// results
+    double_t x1, x2, discriminant, realPart, imaginaryPart;
+    std::vector<double_t> roots;	// results
     //cout << "Enter coefficients a, b and c: ";
     //cin >> a >> b >> c;
     discriminant = b*b - 4*a*c;
