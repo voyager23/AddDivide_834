@@ -67,24 +67,30 @@ void determ_v2(const int64_t n, std::vector<ul> &primes, std::vector<ul> &factor
 	}//~while
 }//~determ_v2
 
-void quad_solve(uint64_t n, std::set<uint64_t>* squares, std::vector<int64_t>* m_values ) {
-	uint64_t m_max = 2 * (n - 2);
+void quad_solve(int64_t n, std::set<int64_t>* squares, std::vector<int64_t>* m_values ) {
+	int64_t m_max = n * (n - 2);
 	m_values->clear();
 	// The term associated with m_max is(m+1)(m+2*n)
-	uint64_t m_max_term = (m_max + 1) + (m_max + 2*n);
-	uint64_t q_max = m_max_term / (n + m_max);
+	int64_t m_max_term = (2*n*(m_max+1) + m_max*m_max + m_max) / 2;
+	int64_t q_max = m_max_term / (n + m_max);
 	// now consider the determinant of the quadratic eqn. for m
 	// 4q^2 - q(8n + 4) + (2n - 1)^2 = Z^2
 	// here a = 4, b = (8n + 4), c = (2n - 1)^2
-	for(uint64_t q = 1; q <= q_max; ++q) {
-		if(squares->contains( 4*q*q - q*(8*n + 4) + (2*n + 1)*(2*n + 1) ) == true) {
+	for(int64_t q = 2; q <= q_max; ++q) {
+		int64_t ZZ = 4*q*q - q*(8*n + 4) + (2*n + 1)*(2*n + 1);
+		if(squares->contains( ZZ ) == true) {
 			// now have the value for q
 			// subs in m^2 + m(2n - 2q + 1) + 2n(1 - q)
 			// where: a = 1, b = (2n - 2q + 1) and c = 2n(1 - q)
-			std::vector<double_t> roots = solve_quadratic(double_t(1), double_t(2*n - 2*q + 1), double_t(2*n * (1 - q)));
-			// print roots
+			std::vector<double_t> roots = solve_quadratic(1.0, (2.0*n - 2.0*q + 1), (2.0*n * (1.0 - q)));
+			for(auto i = roots.begin(); i != roots.end(); ++i)
+				if( (*i - floor(*i) == 0.0) ) {
+					std::cout << *i << " ";
+					break;
+				}
 		} //~if
 	} //~for
+	std::cout << std::endl;
 }
 
 int main(int argc, char **argv)
@@ -93,11 +99,12 @@ int main(int argc, char **argv)
 	std::vector<ul> factors;
 	SieveOfEratosthenes(primes,100000UL);
 	
-	std::set<uint64_t> squares;
-	for(uint64_t s = 1; s != 10000; ++s) squares.insert(s*s);
+	std::set<int64_t> squares;
+	for(int64_t s = 1; s != 50000; ++s) squares.insert(s*s);
 	std::vector<int64_t> m_values;
 	
-	quad_solve(10, &squares, &m_values);
+	for(int64_t n = 20000; n <= 21000; n+=10)
+		quad_solve(n, &squares, &m_values);
 	
 	
 	
